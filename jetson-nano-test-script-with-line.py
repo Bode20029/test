@@ -12,7 +12,7 @@ model = YOLO('path/to/your/yolov8_model.pt')
 cap = cv2.VideoCapture(0)  # Use 0 for default camera, adjust if necessary
 
 # Constants
-DISTANCE_THRESHOLD = 60  # cm
+DISTANCE_THRESHOLD = 150  # cm
 STABLE_DETECTION_TIME = 5  # seconds
 CONFIDENCE_THRESHOLD = 0.5
 

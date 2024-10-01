@@ -13,12 +13,13 @@ MAX_DISTANCE = 400  # cm
 TIMEOUT = 1.0  # seconds
 MEASUREMENT_INTERVAL = 1  # seconds
 
-# Set the GPIO mode to BOARD (physical pin numbering)
-GPIO.setmode(GPIO.BOARD)
-
-# Set up GPIO pins
-GPIO.setup(TRIG_PIN, GPIO.OUT)
-GPIO.setup(ECHO_PIN, GPIO.IN)
+def setup_gpio():
+    # Set the GPIO mode to BOARD (physical pin numbering)
+    GPIO.setmode(GPIO.BOARD)
+    
+    # Set up GPIO pins
+    GPIO.setup(TRIG_PIN, GPIO.OUT)
+    GPIO.setup(ECHO_PIN, GPIO.IN)
 
 def get_distance():
     GPIO.output(TRIG_PIN, GPIO.LOW)
@@ -65,16 +66,20 @@ def filtered_distance():
     logging.warning("Failed to get a valid distance after 3 attempts")
     return None
 
-try:
-    while True:
-        dist = filtered_distance()
-        if dist is None:
-            logging.error("Measurement error or out of range")
-        else:
-            logging.info(f"Measured Distance = {dist} cm")
-        time.sleep(MEASUREMENT_INTERVAL)
-except KeyboardInterrupt:
-    logging.info("Measurement stopped by user")
-finally:
-    GPIO.cleanup()
-    logging.info("GPIO cleanup completed")
+# Setup GPIO when the module is imported
+setup_gpio()
+
+if __name__ == "__main__":
+    try:
+        while True:
+            dist = filtered_distance()
+            if dist is None:
+                logging.error("Measurement error or out of range")
+            else:
+                logging.info(f"Measured Distance = {dist} cm")
+            time.sleep(MEASUREMENT_INTERVAL)
+    except KeyboardInterrupt:
+        logging.info("Measurement stopped by user")
+    finally:
+        GPIO.cleanup()
+        logging.info("GPIO cleanup completed")

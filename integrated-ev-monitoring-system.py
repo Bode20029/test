@@ -21,7 +21,7 @@ PZEM_MONITORING_TIME = 600  # 10 minutes in seconds
 LINE_NOTIFY_TOKEN = 'J0oQ74OftbCNdiPCCfV4gs75aqtz4aAL8NiGfHERvZ4'
 
 # Load YOLOv8 model
-model = YOLO('path/to/your/yolov8_model.pt')
+model = YOLO('/home/bode/Desktop/test/YoloV9_Car.pt')
 
 # Initialize video capture
 cap = cv2.VideoCapture(0)
